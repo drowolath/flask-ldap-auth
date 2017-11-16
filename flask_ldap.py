@@ -3,13 +3,31 @@
 
 
 from functools import wraps
-from flask import Blueprint, current_app, jsonify, Response, request
+from flask import Blueprint, current_app, jsonify, Response, request, url_for
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature, SignatureExpired
+import json
 import ldap
 
 
 token = Blueprint('token', __name__)
+
+
+def authenticate():
+    message = {
+        'error': 'unauthorized',
+        'message': 'Please authenticate with a valid token',
+        'status': 401
+        }
+    response = Response(
+        json.dumps(message),
+        401,
+        {
+            'WWW-Authenticate': 'Basic realm="Authentication Required"',
+            'Location': url_for('token.request_token')
+            }
+        )
+    return response
 
 
 def auth_ldap_required(func):
