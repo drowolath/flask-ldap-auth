@@ -13,6 +13,43 @@ import ldap
 token = Blueprint('token', __name__)
 
 
+class User(object):
+
+    def __init__(self, username):
+        self.username = username
+
+    def verify_password(self, password):
+        connection = ldap.initialize(current_app.config['LDAP_AUTH_SERVER'])
+        result = connection.search_s(
+            current_app.config['LDAP_TOP_DN'],
+            ldap.SCOPE_ONELEVEL,
+            '(uid={})'.format(self.username)
+            )
+        if not result:
+            return False
+        dn = result[0][0]
+        try:
+            connection.bind_s(dn, password)
+        except ldap.INVALID_CREDENTIALS:
+            return False
+        else:
+            connection.unbind_s()
+            return True
+
+    def generate_auth_token(self):
+        s = Serializer(current_app.config['SECRET_KEY'], expires_in=3600)
+        return s.dumps({'username': self.username}).decode('utf-8')
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except (BadSignature, SignatureExpired, TypeError):
+            return None
+        return User(data['username'])
+
+
 def authenticate():
     message = {
         'error': 'unauthorized',
