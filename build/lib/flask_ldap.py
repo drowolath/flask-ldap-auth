@@ -13,12 +13,6 @@ import ldap
 token = Blueprint('token', __name__)
 
 
-__all__ = [
-    'auth_ldap_required',
-    'token'
-    ]
-
-
 class User(object):
 
     def __init__(self, username):
