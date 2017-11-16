@@ -1,9 +1,0 @@
-MANIFEST.in
-README.md
-flask_ldap.py
-setup.py
-flask_ldap.egg-info/PKG-INFO
-flask_ldap.egg-info/SOURCES.txt
-flask_ldap.egg-info/dependency_links.txt
-flask_ldap.egg-info/requires.txt
-flask_ldap.egg-info/top_level.txt
