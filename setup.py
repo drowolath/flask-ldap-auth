@@ -10,7 +10,9 @@ setup(
     py_modules=['flask_ldap'],
     author="Thomas Ayih-Akakpo",
     author_email="thomas@ayih-akakpo.org",
-    description="Simple Flask extension to allow authentication with a LDAP server",
+    description=(
+        "Simple Flask extension to allow "
+        "authentication with a LDAP server"),
     license='MIT',
     include_package_data=True,
     install_requires=[
@@ -18,6 +20,7 @@ setup(
         'pyldap'
         ],
     url='https://github.com/drowolath/flask-ldap',
+    keywords=['python3', 'flask', 'ldap'],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Flask',
