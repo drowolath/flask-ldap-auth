@@ -20,7 +20,8 @@ setup(
         'pyldap'
         ],
     url='https://github.com/drowolath/flask-ldap',
-    keywords=['python3', 'flask', 'ldap'],
+    download_url='https://github.com/drowolath/flask-ldap/archive/0.1.zip',
+    keywords=['python3', 'flask', 'ldap', 'extension'],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Flask',
