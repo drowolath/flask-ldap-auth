@@ -25,7 +25,7 @@ In you brand new Flask app (say `hello.py`), you can use flask-ldap like this:
 
 ```python
 
-from flask_ldap import auth_ldap_required, token
+from flask_ldap import login_required, token
 from flask import Flask
 
 
@@ -37,7 +37,7 @@ app.register_blueprint(token, url_prefix='/auth')
 
 
 @app.route('/')
-@auth_ldap_required
+@login_required
 def hello():
     return 'Hello, world'
 
@@ -125,7 +125,7 @@ app.register_blueprint(token, url_prefix='/auth')
 This means that, we provided the application  _flask_ldap.token_ under the uri `/auth` .
 
 
-The fact is that `auth_ldap_required` awaits a token for Basic HTTP Authentication. In other words, instead of passing (username, password) when authenticating you must pass (token,) .
+The fact is that `login_required` awaits a token for Basic HTTP Authentication. In other words, instead of passing (username, password) when authenticating you must pass (token,) .
 
 That token is then verified (using the SECRET_KEY you've set in your app's config).
 

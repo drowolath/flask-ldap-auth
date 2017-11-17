@@ -14,7 +14,7 @@ token = Blueprint('token', __name__)
 
 
 __all__ = [
-    'auth_ldap_required',
+    'login_required',
     'token'
     ]
 
@@ -73,7 +73,7 @@ def authenticate():
     return response
 
 
-def auth_ldap_required(func):
+def login_required(func):
     """LDAP authentication decorator"""
     @wraps(func)
     def wrapper(*args, **kwargs):
