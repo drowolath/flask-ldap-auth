@@ -1,4 +1,4 @@
-# Flask-LDAP
+# Flask-LDAP-Auth
 
 Flask-LDAP is intended to be a simple Flask extension that allows you
 to perform authentication against a LDAP server.
@@ -16,7 +16,7 @@ The code is quite straight-forward, and can be hacked to implement other auth te
 Of course, the preferred way is via pip
 
 ```
-$ pip install flask-ldap
+$ pip install flask-ldap-auth
 ```
 
 ## Usage
