@@ -25,7 +25,7 @@ In you brand new Flask app (say `hello.py`), you can use flask-ldap like this:
 
 ```python
 
-from flask_ldap import login_required, token
+from flask_ldap_auth import login_required, token
 from flask import Flask
 
 
