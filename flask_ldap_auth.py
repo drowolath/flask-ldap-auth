@@ -100,8 +100,11 @@ def request_token():
     """Simple app to generate a token"""
     auth = request.authorization
     user = User(auth.username)
-    print(auth.username)
-    if not auth or not user.verify_password(auth.password):
+    kwargs = {
+        'authenticated_search': request.args.get('authenticated_search', False),
+        'search_criteria': request.args.get('search_criteria')
+        }
+    if not auth or not user.verify_password(auth.password, **kwargs):
         return authenticate()
     response = {
         'token': user.generate_auth_token() + ':'
