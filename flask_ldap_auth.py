@@ -24,12 +24,23 @@ class User(object):
     def __init__(self, username):
         self.username = username
 
-    def verify_password(self, password):
+    def verify_password(self, password, **kwargs):
+        """Method to check if provided password is valid"""
         connection = ldap.initialize(current_app.config['LDAP_AUTH_SERVER'])
+        if kwargs.get('authenticated_search', None):
+            # authenticate to LDAP server before performing a search
+            # need to provide in your Flask app's config parameters
+            # to do so
+            connection.bind_s(
+                current_app.config['LDAP_USERNAME'],
+                current_app.config['LDAP_PASSWORD'],
+                ldap.AUTH_SIMPLE
+                )
+        search_criteria = kwargs.get('search_criteria', 'uid')
         result = connection.search_s(
             current_app.config['LDAP_TOP_DN'],
             ldap.SCOPE_ONELEVEL,
-            '(uid={})'.format(self.username)
+            '({}={})'.format(search_criteria, self.username)
             )
         if not result:
             return False
