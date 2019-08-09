@@ -86,6 +86,11 @@ http: password for your_username@127.0.0.1:5000:
 
 Type in your password (don't worry if nothing is displayed on-screen), and you'll received a shiny new token:
 
+**Note**: URL parameters can be passed into the request to account for:
+ - authenticated search in the LDAP tree: you would have to pass `?authenticated_search=true` in the URL to do so, and configure
+ your flask app with the following parameters `LDAP_USERNAME` and `LDAP_PASSWORD`
+ - custom parameters for the username tag in the directory: if you do not search username against the default `uid` parameter, you can pass `?search_criteria=yourcriteria`
+
 ```
 HTTP/1.0 200 OK
 Content-Length: 189
