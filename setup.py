@@ -17,7 +17,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'Flask',
-        'pyldap'
+        'python-ldap'
         ],
     url='https://github.com/drowolath/flask-ldap-auth',
     download_url='https://github.com/drowolath/flask-ldap-auth/archive/0.2.2.zip',
