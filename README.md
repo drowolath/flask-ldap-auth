@@ -86,11 +86,6 @@ http: password for your_username@127.0.0.1:5000:
 
 Type in your password (don't worry if nothing is displayed on-screen), and you'll received a shiny new token:
 
-**Note**: URL parameters can be passed into the request to account for:
- - authenticated search in the LDAP tree: you would have to pass `?authenticated_search=true` in the URL to do so, and configure
- your flask app with the following parameters `LDAP_USERNAME` and `LDAP_PASSWORD`
- - custom parameters for the username tag in the directory: if you do not search username against the default `uid` parameter, you can pass `?search_criteria=yourcriteria`
-
 ```
 HTTP/1.0 200 OK
 Content-Length: 189
@@ -102,6 +97,31 @@ Server: Werkzeug/0.12.2 Python/3.5.3
     "token": "a_token:"
 }
 ```
+
+You can also specify the desired duration of the token (by default it's 3600 seconds) by passing the `token_duration` parameter to your request:
+
+```
+$ http --auth your_username POST http://127.0.0.1:5000/auth/request-token token_duration==3600
+http: password for your_username@127.0.0.1:5000:
+```
+
+If you do not search username against the default `uid` parameter, you must pass `search_criteria=yourcriteria` to your url parameters
+
+```
+$ http --auth your_username POST http://127.0.0.1:5000/auth/request-token search_criteria==cn
+http: password for your_username@127.0.0.1:5000:
+```
+
+If your LDAP server does not allow anonymous binding, you must tell the API by:
+
+ - providing credentials in your Flask app configuration with the following parameters: `LDAP_USERNAME` and `LDAP_PASSWORD`
+ - using `authenticated_search=true` in the url parameters
+
+```
+$ http --auth your_username POST http://127.0.0.1:5000/auth/request-token  authenticated_search==true
+http: password for your_username@127.0.0.1:5000:
+```
+
 
 Now you can use this token and access the `/` endpoint:
 
