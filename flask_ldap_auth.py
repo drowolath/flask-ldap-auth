@@ -38,6 +38,7 @@ class User(object):
             # to do so
             connection.bind_s(
                 full_dn,
+                current_app.config["LDAP_PASSWORD"],
                 ldap.AUTH_SIMPLE
                 )
         result = connection.search_s(
