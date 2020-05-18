@@ -26,13 +26,13 @@ class User(object):
 
     def verify_password(self, password, **kwargs):
         """Method to check if provided password is valid"""
-        search_criteria = kwargs.get('search_criteria', 'uid')
+        search_criteria = kwargs['search_criteria']
         full_dn = (
             f'{search_criteria}={current_app.config["LDAP_USERNAME"]},'
             f'{current_app.config["LDAP_TOP_DN"]}'
             )
         connection = ldap.initialize(current_app.config['LDAP_AUTH_SERVER'])
-        if kwargs.get('authenticated_search', None):
+        if kwargs['authenticated_search']:
             # authenticate to LDAP server before performing a search
             # need to provide in your Flask app's config parameters
             # to do so
@@ -57,8 +57,8 @@ class User(object):
             connection.unbind_s()
             return True
 
-    def generate_auth_token(self):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_in=3600)
+    def generate_auth_token(self, duration=3600):
+        s = Serializer(current_app.config['SECRET_KEY'], expires_in=duration)
         return s.dumps({'username': self.username}).decode('utf-8')
 
     @staticmethod
@@ -106,12 +106,15 @@ def request_token():
     user = User(auth.username)
     kwargs = {
         'authenticated_search': request.args.get('authenticated_search', False),
-        'search_criteria': request.args.get('search_criteria')
+        'search_criteria': request.args.get('search_criteria', 'uid')
         }
+    token_duration = request.args.get('token_duration', 3600)
+    if isinstance(token_duration, str):
+        token_duration = float(token_duration)
     if not auth or not user.verify_password(auth.password, **kwargs):
         return authenticate()
     response = {
-        'token': user.generate_auth_token() + ':'
+        'token': user.generate_auth_token(duration=token_duration) + ':'
         }
     return jsonify(response)
 
