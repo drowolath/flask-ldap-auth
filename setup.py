@@ -20,7 +20,7 @@ setup(
         'python-ldap'
         ],
     url='https://github.com/drowolath/flask-ldap-auth',
-    download_url='https://github.com/drowolath/flask-ldap-auth/archive/0.2.3.zip',
+    download_url='https://github.com/drowolath/flask-ldap-auth/archive/0.2.4.zip',
     keywords=['python3', 'flask', 'ldap', 'extension', 'authentication'],
     classifiers=[],
 )
