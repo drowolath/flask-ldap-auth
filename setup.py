@@ -6,7 +6,7 @@ from setuptools import setup
 
 setup(
     name="flask-ldap-auth",
-    version="0.2.3",
+    version="0.2.4",
     py_modules=['flask_ldap_auth'],
     author="Thomas Ayih-Akakpo",
     author_email="thomas@ayih-akakpo.org",
